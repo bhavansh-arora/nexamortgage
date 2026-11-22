@@ -1,0 +1,62 @@
+<div class="calc" data-calc data-reveal>
+  <div class="calc__inputs">
+    <div class="calc__mode" role="group" aria-label="Rental strategy">
+      <button type="button" data-mode="ltr" aria-pressed="true">Long-term rental</button>
+      <button type="button" data-mode="str" aria-pressed="false">Short-term rental</button>
+    </div>
+    <div class="field-range">
+      <div class="field-range__top"><label for="c-price">Purchase price</label><output for="c-price">$285,000</output></div>
+      <input id="c-price" name="price" type="range" min="75000" max="1000000" step="5000" value="285000">
+    </div>
+    <div class="field-range">
+      <div class="field-range__top"><label for="c-rent">Monthly rent (long-term lease)</label><output for="c-rent">$2,400</output></div>
+      <input id="c-rent" name="rent" type="range" min="600" max="9000" step="25" value="2400">
+    </div>
+    <div class="calc__row2">
+      <div class="field-range">
+        <div class="field-range__top"><label for="c-down">Down payment</label><output for="c-down">25%</output></div>
+        <input id="c-down" name="down" type="range" min="15" max="45" step="1" value="25">
+      </div>
+      <div class="field-range">
+        <div class="field-range__top"><label for="c-rate">Interest rate</label><output for="c-rate">7.25%</output></div>
+        <input id="c-rate" name="rate" type="range" min="5" max="10.5" step="0.125" value="7.25">
+      </div>
+    </div>
+    <div class="calc__row2">
+      <div class="field-range">
+        <div class="field-range__top"><label for="c-tax">Property taxes / yr</label><output for="c-tax">$2,800</output></div>
+        <input id="c-tax" name="tax" type="range" min="0" max="15000" step="100" value="2800">
+      </div>
+      <div class="field-range">
+        <div class="field-range__top"><label for="c-ins">Insurance / yr</label><output for="c-ins">$1,500</output></div>
+        <input id="c-ins" name="ins" type="range" min="0" max="8000" step="50" value="1500">
+      </div>
+    </div>
+    <div class="field-range">
+      <div class="field-range__top"><label for="c-hoa">HOA / mo</label><output for="c-hoa">$0</output></div>
+      <input id="c-hoa" name="hoa" type="range" min="0" max="800" step="10" value="0">
+    </div>
+    <p class="calc__tip"><span>✦</span><span><b>Long-term rent not quite clearing?</b> Flip to short-term rental. Some lenders qualify Airbnb and VRBO properties on AirDNA market projections, which is exactly how one of Daniel's “no” deals closed.</span></p>
+  </div>
+  <div class="calc__out" aria-live="polite">
+    <div class="calc__score">
+      <div><span class="k">Your DSCR</span><br><b data-out="dscr">1.24</b></div>
+      <div class="verdict" data-tone="good"><i></i><span>Approvable</span></div>
+    </div>
+    <div>
+      <div class="meter"><i></i></div>
+      <div class="meter-scale"><span>0.50</span><span>1.00</span><span>1.25</span><span>1.75+</span></div>
+    </div>
+    <p class="calc__msg">Break-even or better.</p>
+    <dl class="calc__breakdown">
+      <div><dt>Loan amount</dt><dd data-out="loan">$213,750</dd></div>
+      <div><dt>Principal &amp; interest</dt><dd data-out="pi">$1,458</dd></div>
+      <div><dt>Taxes, insurance &amp; HOA</dt><dd data-out="ti">$358</dd></div>
+      <div class="total"><dt>Total PITIA</dt><dd data-out="pitia">$1,816</dd></div>
+      <div><dt>Monthly rent</dt><dd data-out="rent">$2,400</dd></div>
+      <div class="cf"><dt>Est. cash flow before vacancy &amp; repairs</dt><dd data-out="cf" class="pos">+$584/mo</dd></div>
+    </dl>
+    <a class="btn" href="contact.html" data-send data-magnetic>Send this deal to Daniel <span class="ic">{{arrow}}</span></a>
+    <p class="calc__note">30-year amortization. Estimates for illustration only, not a loan offer. Actual qualifying DSCR, rate and terms depend on the lender, credit, appraisal and market rent.</p>
+  </div>
+</div>

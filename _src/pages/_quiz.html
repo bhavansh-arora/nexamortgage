@@ -1,0 +1,67 @@
+<div class="quiz" id="fit-finder">
+  <div class="quiz__intro">
+    <span class="eyebrow">The Loan Fit Finder</span>
+    <h2 class="h2 split"><span class="line"><span>Not sure which</span></span><span class="line"><span>loan <em class="swash">fits?</em></span></span></h2>
+    <p class="lead" data-reveal>Four quick questions. Sixty seconds. Find the program that matches your deal right now, then send it straight to Daniel, already filled in.</p>
+    <div class="chips" data-reveal><span class="chip">⏱ 60 seconds</span><span class="chip">🔒 No credit pull</span><span class="chip">✦ 20 programs checked</span></div>
+  </div>
+  <div class="quiz__card" data-quiz data-reveal="scale">
+    <div class="quiz__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <div class="quiz__q" data-q="use">
+      <span class="kicker">Question 01 / 04</span>
+      <h3 class="h3">What's the property for?</h3>
+      <div class="quiz__opts">
+        <button type="button" data-v="rental"><span class="key">A</span>A rental I'll hold long-term</button>
+        <button type="button" data-v="str"><span class="key">B</span>An Airbnb or VRBO short-term rental</button>
+        <button type="button" data-v="flip"><span class="key">C</span>A fix-and-flip</button>
+        <button type="button" data-v="home"><span class="key">D</span>A home I'll live in</button>
+      </div>
+    </div>
+
+    <div class="quiz__q" data-q="income">
+      <span class="kicker">Question 02 / 04</span>
+      <h3 class="h3">How do your tax returns look to a bank?</h3>
+      <div class="quiz__opts">
+        <button type="button" data-v="w2"><span class="key">A</span>Strong, steady W-2 income</button>
+        <button type="button" data-v="writeoffs"><span class="key">B</span>Lots of write-offs, so lower on paper</button>
+        <button type="button" data-v="self"><span class="key">C</span>I'm self-employed</button>
+        <button type="button" data-v="unsure"><span class="key">D</span>Not sure</button>
+      </div>
+    </div>
+
+    <div class="quiz__q" data-q="cash">
+      <span class="kicker">Question 03 / 04</span>
+      <h3 class="h3">Does the rent cover the payment?</h3>
+      <div class="quiz__opts">
+        <button type="button" data-v="yes"><span class="key">A</span>Yes, comfortably</button>
+        <button type="button" data-v="even"><span class="key">B</span>About break-even</button>
+        <button type="button" data-v="no"><span class="key">C</span>Not on long-term rent</button>
+        <button type="button" data-v="na"><span class="key">D</span>Doesn't apply / not sure</button>
+      </div>
+    </div>
+
+    <div class="quiz__q" data-q="count">
+      <span class="kicker">Question 04 / 04</span>
+      <h3 class="h3">How many financed properties do you own?</h3>
+      <div class="quiz__opts">
+        <button type="button" data-v="0"><span class="key">A</span>None yet, this is my first</button>
+        <button type="button" data-v="1"><span class="key">B</span>1 to 3</button>
+        <button type="button" data-v="4"><span class="key">C</span>4 to 9</button>
+        <button type="button" data-v="10"><span class="key">D</span>10 or more</button>
+      </div>
+      <button type="button" class="quiz__back" data-qback>← Back</button>
+    </div>
+
+    <div class="quiz__result" aria-live="polite">
+      <span class="match">✓ Your best-fit starting point</span>
+      <h3 class="h3" data-r-title>DSCR Loan</h3>
+      <p class="muted" data-r-text></p>
+      <ul data-r-list></ul>
+      <div class="btn-row">
+        <a class="btn btn--dark" href="contact.html" data-r-link>Send this to Daniel <span class="ic">{{arrow}}</span></a>
+        <button type="button" class="restart" data-qrestart>Start over</button>
+      </div>
+    </div>
+  </div>
+</div>
