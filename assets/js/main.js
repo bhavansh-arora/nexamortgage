@@ -353,7 +353,12 @@
         $$("[data-hs]").forEach(function (sec) {
           var track = $(".hs__track", sec), bar = $(".route__line i", sec);
           var dist = function () { return Math.max(0, track.scrollWidth - window.innerWidth + 40); };
-          gsap.to(track, { x: function () { return -dist(); }, ease: "none", scrollTrigger: { trigger: sec, start: "top top+=" + (window.innerHeight * .08), end: function () { return "+=" + dist(); }, pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
+          gsap.to(track, { x: function () { return -dist(); }, ease: "none", scrollTrigger: { trigger: sec, start: function () {
+              // pin the panel where it fits on screen with an even gap above and below (the header floats over the top gap)
+              var panel = $(".panel", sec), ph = panel ? panel.offsetHeight : sec.offsetHeight, vh = window.innerHeight, gap = Math.max(12, (vh - ph) / 2);
+              if (ph + 24 > vh) return "bottom bottom-=12";
+              return "top top+=" + Math.round(Math.max(gap, Math.min(84, vh - ph - 12)));
+            }, end: function () { return "+=" + dist(); }, pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
             onUpdate: function (s) { if (bar) bar.style.transform = "scaleX(" + s.progress + ")"; setStep(sec, s.progress); } } });
         });
       });

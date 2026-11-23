@@ -1032,3 +1032,21 @@ html.anim .split .line > span { transform: translateY(110%); }
 /* looping decorations run on their own layers so they never force big repaints */
 .ticker__track { will-change: transform; }
 .pill .dot, .hero__glow { will-change: auto; }
+
+/* "How it works": stay compact on shorter screens so the pinned panel always fits */
+@media (min-width: 761px) and (max-height: 900px) {
+  .hs-pin .panel.section { padding-block: clamp(36px, 5vh, 56px); }
+  .hs__head { margin-bottom: clamp(18px, 2.6vh, 28px); }
+  .hs__head .h2 { font-size: clamp(2rem, 3.4vw, 3.3rem); }
+  .route { padding: 14px 18px 12px; } .route__top { margin-bottom: 10px; }
+  .hs__gold, .hs__pill { padding-block: 12px; }
+  .hs__card { gap: clamp(24px, 3vh, 40px); padding-block: 24px; }
+  .hs__card .num { font-size: clamp(2.8rem, 4vw, 3.8rem); }
+}
+@media (min-width: 761px) and (max-height: 760px) {
+  .hs__strip { display: none; }
+}
+@media (min-width: 761px) and (max-width: 1024px) and (max-height: 900px) {
+  .hs__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
+  .hs__strip { display: none; }
+}
