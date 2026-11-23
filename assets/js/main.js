@@ -103,11 +103,11 @@
       houseLen(); cHouse.forEach(function (p) { p.style.strokeDashoffset = 0; });
       gsap.set(cFill, { clipPath: "inset(0px 0px 0px 0px round 0px)", opacity: 1 });
       gsap.timeline({ delay: .08, onComplete: function () { doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel], { clearProps: "all" }); if (lenis) lenis.start(); } })
-        .to(chars, { yPercent: -110, duration: .45, ease: "expo.in", stagger: .014 })
-        .to(".curtain__label .mk, .curtain__label small, .curtain__house", { opacity: 0, y: -16, duration: .4, ease: "power2.in" }, "<")
-        .to(cFill, { clipPath: panelInset(), duration: .8, ease: "expo.inOut" }, "-=.3")
-        .add(pageIntro, "-=.45")
-        .to(cFill, { opacity: 0, duration: .55, ease: "power1.out" }, "-=.4");
+        .to(chars, { yPercent: -110, duration: .6, ease: "expo.in", stagger: .02 })
+        .to(".curtain__label .mk, .curtain__label small, .curtain__house", { opacity: 0, y: -16, duration: .5, ease: "power2.in" }, "<")
+        .to(cFill, { clipPath: panelInset(), duration: 1.05, ease: "expo.inOut" }, "-=.2")
+        .add(pageIntro, "-=.55")
+        .to(cFill, { opacity: 0, duration: .7, ease: "power1.out" }, "-=.5");
     } else {
       doc.classList.remove("curtain-in");
       pageIntro();
@@ -137,13 +137,14 @@
     gsap.set(".curtain__label .mk", { scale: 0, rotate: -90 });
     gsap.set(".curtain__label small", { opacity: 0, y: 10 });
     var tl = gsap.timeline({ onComplete: function () { window.location.href = href; } });
-    tl.to(cRing, { scale: 1.02, duration: .75, ease: "expo.inOut" }, 0)
-      .to(cRing, { opacity: 0, duration: .25 }, .55)
-      .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: .75, ease: "expo.inOut" }, .04)
-      .to(".curtain__label .mk", { scale: 1, rotate: 0, duration: .6, ease: "back.out(2)" }, .35)
-      .to(chars, { yPercent: 0, duration: .55, ease: "expo.out", stagger: .018 }, .38)
-      .to(cHouse, { strokeDashoffset: 0, duration: .7, ease: "power2.inOut", stagger: .02 }, .35)
-      .to(".curtain__label small", { opacity: 1, y: 0, duration: .4, ease: "expo.out" }, .55);
+    tl.to(cRing, { scale: 1.02, duration: 1.05, ease: "expo.inOut" }, 0)
+      .to(cRing, { opacity: 0, duration: .35 }, .8)
+      .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: 1.05, ease: "expo.inOut" }, .06)
+      .to(".curtain__label .mk", { scale: 1, rotate: 0, duration: .75, ease: "back.out(1.8)" }, .55)
+      .to(chars, { yPercent: 0, duration: .8, ease: "expo.out", stagger: .028 }, .6)
+      .to(cHouse, { strokeDashoffset: 0, duration: 1, ease: "power2.inOut", stagger: .03 }, .55)
+      .to(".curtain__label small", { opacity: 1, y: 0, duration: .55, ease: "expo.out" }, .85)
+      .to({}, { duration: .18 });
   }
 
   var prefetched = {};
