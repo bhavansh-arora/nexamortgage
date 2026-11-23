@@ -246,6 +246,12 @@
     initScroll();
   }
 
+  function setStep(sec, pr) {
+    var el = $("[data-hs-step]", sec); if (!el) return;
+    var n = $$(".hs__card", sec).length || 5;
+    el.textContent = String(Math.min(n, 1 + Math.floor(pr * n * .999))).padStart(2, "0");
+  }
+
   function initScroll() {
     // split headlines
     $$(".split").forEach(function (el) {
@@ -292,12 +298,21 @@
     });
     // horizontal process (desktop pinned, mobile native swipe)
     var mm = gsap.matchMedia();
+    // phones: the cards swipe natively, so drive the counter and bar from the swipe position
+    mm.add("(max-width: 760px)", function () {
+      $$("[data-hs]").forEach(function (sec) {
+        var vp = $(".hs-viewport", sec), bar = $(".hs__progress i", sec); if (!vp) return;
+        var onSwipe = function () { var max = vp.scrollWidth - vp.clientWidth; var pr = max > 0 ? vp.scrollLeft / max : 0; if (bar) bar.style.transform = "scaleX(" + (.15 + pr * .85) + ")"; setStep(sec, pr); };
+        vp.addEventListener("scroll", onSwipe, { passive: true }); onSwipe();
+        return function () { vp.removeEventListener("scroll", onSwipe); };
+      });
+    });
     mm.add("(min-width: 761px)", function () {
       $$("[data-hs]").forEach(function (sec) {
         var track = $(".hs__track", sec), bar = $(".hs__progress i", sec);
         var dist = function () { return Math.max(0, track.scrollWidth - window.innerWidth + 40); };
         gsap.to(track, { x: function () { return -dist(); }, ease: "none", scrollTrigger: { trigger: sec, start: "top top+=" + (window.innerHeight * .08), end: function () { return "+=" + dist(); }, pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
-          onUpdate: function (s) { if (bar) bar.style.transform = "scaleX(" + (.15 + s.progress * .85) + ")"; } } });
+          onUpdate: function (s) { if (bar) bar.style.transform = "scaleX(" + (.15 + s.progress * .85) + ")"; setStep(sec, s.progress); } } });
       });
     });
     // footer wordmark
