@@ -138,7 +138,9 @@ def header(active):
         f'<a href="{f}"{cur if f == active else ""}>{label}</a>' for f, label, _ in NAV
     )
     menu = "".join(
-        f'<li><a href="{f}"><span class="n">0{i+1}</span><span>{big}</span></a></li>'
+        (f'<li class="is-current"><a href="{f}" aria-current="page"><span class="n">0{i+1}</span><span>{big}</span><span class="here">You\'re here</span></a></li>'
+         if f == active else
+         f'<li><a href="{f}"><span class="n">0{i+1}</span><span>{big}</span></a></li>')
         for i, (f, _, big) in enumerate(NAV)
     )
     return f"""<header class="header">
