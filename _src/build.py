@@ -82,9 +82,13 @@ ARCS = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-widt
 HOUSE_ART = '''<svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 290h360"/><path d="M60 290V150l110-90 110 90v140"/><path d="M40 166L170 58l130 108"/><path d="M230 98V52h28v68"/><path d="M140 290v-80h60v80"/><path d="M188 252h4"/><path d="M84 180h40v40H84zM104 180v40M84 200h40"/><path d="M216 180h40v40h-40zM236 180v40M216 200h40"/><path d="M150 120a20 20 0 0140 0v20h-40z"/><path d="M300 290v-60c0-20 30-20 30 0v60M315 232v58"/><path d="M330 250c18-6 30 4 30 18M340 290c0-24 30-30 40-14"/></svg>'''
 
 PRELOADER = """<div class="preloader" aria-hidden="true">
-  <div class="preloader__top"><span class="preloader__brand"><i>d</i>Closing with Daniel</span><span>DSCR &amp; investor lending · IN &amp; KY</span></div>
-  <div class="preloader__words"><span class="w"><i>Let</i></span> <span class="w"><i>the</i></span> <span class="w"><i>property</i></span> <span class="w w--serif"><i>qualify</i></span> <span class="w"><i>itself.</i></span></div>
-  <div class="preloader__bottom"><span class="preloader__count">000</span><span class="preloader__bar"><i></i></span><span>NMLS #2006359</span></div>
+  <div class="pl-stage">
+    <div class="pl-mark"><svg viewBox="0 0 120 120"><circle class="pl-ring" cx="60" cy="60" r="56"/><circle class="pl-ring pl-ring--2" cx="60" cy="60" r="48"/></svg><span class="pl-disc"><span class="pl-d">d</span></span></div>
+    <div class="pl-word"><span class="pl-w"><span class="pl-ch"><i>C</i></span><span class="pl-ch"><i>l</i></span><span class="pl-ch"><i>o</i></span><span class="pl-ch"><i>s</i></span><span class="pl-ch"><i>i</i></span><span class="pl-ch"><i>n</i></span><span class="pl-ch"><i>g</i></span></span><span class="pl-w pl-w--serif"><span class="pl-ch s"><i>w</i></span><span class="pl-ch s"><i>i</i></span><span class="pl-ch s"><i>t</i></span><span class="pl-ch s"><i>h</i></span></span><span class="pl-w"><span class="pl-ch"><i>D</i></span><span class="pl-ch"><i>a</i></span><span class="pl-ch"><i>n</i></span><span class="pl-ch"><i>i</i></span><span class="pl-ch"><i>e</i></span><span class="pl-ch"><i>l</i></span></span></div>
+    <div class="pl-sub"><span>DSCR &amp; investor lending</span><i></i><span>Indiana &amp; Kentucky</span><i></i><span>NMLS #2006359</span></div>
+    <div class="pl-tag"><span class="pl-line"><span>Let the property <em>qualify</em> itself.</span></span></div>
+  </div>
+  <div class="pl-foot"><span class="pl-count">000</span><span class="pl-bar"><i></i></span><span class="pl-place">New Albany, IN</span></div>
 </div>
 <div class="curtain" aria-hidden="true">
   <div class="curtain__fill"></div><div class="curtain__ring"></div>

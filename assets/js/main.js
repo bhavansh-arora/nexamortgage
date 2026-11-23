@@ -68,13 +68,13 @@
 
   if (showPre && hasGSAP && !reduced) {
     if (lenis) lenis.stop();
-    var cnt = { v: 0 }, cEl = $(".preloader__count", pre), words = $$(".preloader__words .w > i", pre);
-    gsap.set(words, { yPercent: 110 });
+    var plChars = $$(".pl-ch > i", pre), cnt = { v: 0 }, cEl = $(".pl-count", pre);
+    gsap.set(plChars, { yPercent: 115 });
+    gsap.set(".pl-sub > *", { opacity: 0, y: 10 });
+    gsap.set(".pl-tag .pl-line > span", { yPercent: 115 });
+    gsap.set(".pl-foot", { opacity: 0 });
     var preStarted = false;
-    var startPre = function () {
-      if (preStarted) return; preStarted = true;
-      requestAnimationFrame(function () { requestAnimationFrame(runPre); });
-    };
+    var startPre = function () { if (preStarted) return; preStarted = true; requestAnimationFrame(function () { requestAnimationFrame(runPre); }); };
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () {
       if (document.readyState === "complete") startPre(); else window.addEventListener("load", startPre, { once: true });
     });
@@ -82,17 +82,44 @@
     // any scroll, swipe, key or click during the intro fast-forwards it instead of being ignored
     var hurry = function () { if (window.__preTl) window.__preTl.timeScale(3); };
     ["wheel", "touchstart", "keydown", "pointerdown"].forEach(function (ev) { window.addEventListener(ev, hurry, { passive: true, once: true }); });
+
+    // the monogram flies from the centre of the loader onto the logo in the menu bar
+    function flyMark() {
+      var from = $(".pl-disc", pre).getBoundingClientRect(), target = $(".header .brand__mark");
+      if (!target || !from.width) return;
+      var to = target.getBoundingClientRect();
+      var fly = document.createElement("div"); fly.className = "pl-fly"; fly.textContent = "d";
+      fly.style.cssText = "left:" + from.left + "px;top:" + from.top + "px;width:" + from.width + "px;height:" + from.height + "px;font-size:" + (from.width * .62) + "px";
+      document.body.appendChild(fly);
+      gsap.set($(".pl-disc", pre), { opacity: 0 });
+      gsap.set(target, { opacity: 0 });
+      var sc = to.width / from.width;
+      gsap.to(fly, { x: to.left - from.left + (to.width - from.width) / 2, y: to.top - from.top + (to.height - from.height) / 2, scale: sc, duration: 1.05, ease: "expo.inOut",
+        onComplete: function () { gsap.set(target, { opacity: 1 }); gsap.to(fly, { opacity: 0, duration: .25, onComplete: function () { fly.remove(); } }); } });
+    }
+
     function runPre() {
-    window.__preTl = gsap.timeline({ onComplete: function () { pre.remove(); if (lenis) lenis.start(); window.__preTl = null; } })
-      .from(".preloader__top, .preloader__bottom", { opacity: 0, y: 12, duration: .6, ease: "power2.out", stagger: .05 })
-      .to(words, { yPercent: 0, duration: .9, ease: "expo.out", stagger: .06 }, "-=.35")
-      .to(cnt, { v: 100, duration: 1.25, ease: "power2.inOut", onUpdate: function () { cEl.textContent = String(Math.round(cnt.v)).padStart(3, "0"); } }, "<")
-      .to(".preloader__bar i", { scaleX: 1, duration: 1.25, ease: "power2.inOut" }, "<")
-      .to(words, { yPercent: -110, duration: .6, ease: "expo.in", stagger: .03 })
-      .to(".preloader__top, .preloader__bottom", { opacity: 0, duration: .4 }, "<")
-      .to(pre, { clipPath: panelInset(), duration: .9, ease: "expo.inOut" }, "-=.15")
-      .add(pageIntro, "-=.55")
-      .to(pre, { opacity: 0, duration: .6, ease: "power1.out" }, "-=.5");
+      window.__preTl = gsap.timeline({ defaults: { ease: "expo.out" }, onComplete: function () { pre.remove(); if (lenis) lenis.start(); window.__preTl = null; } })
+        // 1. the monogram: brass rings draw, the disc pops in
+        .to(".pl-ring", { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut", stagger: .12 }, 0)
+        .to(".pl-disc", { scale: 1, duration: .8, ease: "back.out(1.7)" }, .35)
+        .fromTo(".pl-d", { rotate: -25, opacity: 0 }, { rotate: 0, opacity: 1, duration: .7 }, .5)
+        // 2. the wordmark rises letter by letter
+        .to(plChars, { yPercent: 0, duration: .9, stagger: .028 }, .55)
+        // 3. credentials fan in, progress runs along the bottom
+        .to(".pl-sub > *", { opacity: 1, y: 0, duration: .7, stagger: .06 }, 1.0)
+        .to(".pl-foot", { opacity: 1, duration: .6, ease: "power1.out" }, .9)
+        .to(cnt, { v: 100, duration: 1.7, ease: "power2.inOut", onUpdate: function () { cEl.textContent = String(Math.round(cnt.v)).padStart(3, "0"); } }, .9)
+        .to(".pl-bar i", { scaleX: 1, duration: 1.7, ease: "power2.inOut" }, .9)
+        // 4. the promise
+        .to(".pl-tag .pl-line > span", { yPercent: 0, duration: .9 }, 1.35)
+        // 5. exit: text lifts away, the mark flies to the menu bar, the cover becomes the hero panel
+        .to(plChars, { yPercent: -115, duration: .55, ease: "expo.in", stagger: .012 }, 2.75)
+        .to(".pl-sub, .pl-tag, .pl-foot, .pl-ring", { opacity: 0, y: -12, duration: .45, ease: "power2.in" }, 2.75)
+        .add(flyMark, 2.95)
+        .to(pre, { clipPath: panelInset(), duration: 1, ease: "expo.inOut" }, 3.0)
+        .add(pageIntro, 3.45)
+        .to(pre, { opacity: 0, duration: .6, ease: "power1.out" }, 3.6);
     }
   } else {
     if (pre) pre.remove();
