@@ -667,7 +667,8 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.18); }
 .cta__chips svg { width: 14px; height: 14px; color: var(--gold); }
 .cta__art { position: absolute; left: 1%; bottom: -2px; width: clamp(220px, 27vw, 400px); color: var(--gold); opacity: .5; z-index: -1; }
 .cta__art--r { left: auto; right: 1%; width: clamp(160px, 19vw, 280px); opacity: .32; transform: scaleX(-1); }
-.cta__art path { stroke-dasharray: 1600; stroke-dashoffset: 1600; transition: stroke-dashoffset 3.2s var(--ease); }
+.cta__art path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1); }
+.cta__art path:nth-child(3n+2) { transition-delay: .15s; } .cta__art path:nth-child(3n) { transition-delay: .3s; }
 .is-in .cta__art path, html:not(.anim) .cta__art path { stroke-dashoffset: 0; }
 
 /* ---------- Page hero (inner) ---------- */

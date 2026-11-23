@@ -64,7 +64,8 @@
     var txt = el.textContent; el.textContent = "";
     return txt.split("").map(function (ch) { var s = document.createElement("span"); s.className = "ch"; s.textContent = ch === " " ? " " : ch; el.appendChild(s); return s; });
   }
-  function houseLen() { cHouse.forEach(function (p) { var L = p.getTotalLength ? p.getTotalLength() : 300; p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.dataset.len = L; }); }
+  // paths use pathLength="1", so every segment draws from 1 to 0 whatever its real length
+  function houseLen() { cHouse.forEach(function (p) { p.style.strokeDasharray = 1; p.style.strokeDashoffset = 1; }); }
 
   if (showPre && hasGSAP && !reduced) {
     if (lenis) lenis.stop();
@@ -169,7 +170,7 @@
       .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: 1.05, ease: "expo.inOut" }, .06)
       .to(".curtain__label .mk", { scale: 1, rotate: 0, duration: .75, ease: "back.out(1.8)" }, .55)
       .to(chars, { yPercent: 0, duration: .8, ease: "expo.out", stagger: .028 }, .6)
-      .to(cHouse, { strokeDashoffset: 0, duration: 1, ease: "power2.inOut", stagger: .03 }, .55)
+      .to(cHouse, { strokeDashoffset: 0, duration: .8, ease: "power2.inOut", stagger: .02 }, .3)
       .to(".curtain__label small", { opacity: 1, y: 0, duration: .55, ease: "expo.out" }, .85)
       .to({}, { duration: .18 });
   }
