@@ -307,8 +307,9 @@
     if (badge) tl.fromTo(badge, { scale: 0, rotate: -160, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, duration: 1.4, ease: "back.out(1.6)" }, 1.0);
     var sparks = $$(".hero .sparkle, .phero > .sparkle");
     if (sparks.length) tl.fromTo(sparks, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: .8, stagger: .1, ease: "back.out(3)", clearProps: "transform,opacity" }, 1.1);
-    // inner-page image cards wipe open
-    $$(".phero .itile").forEach(function (t) { tl.fromTo(t, { clipPath: "inset(100% 0% 0% 0% round 30px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.4, ease: "expo.inOut", clearProps: "clipPath" }, .35); });
+    // inner-page photo cards arrive with the rest of the hero (same fade/slide as the left side);
+    // the photo inside settles from a gentle zoom so it still feels rich
+    $$(".phero .itile > img").forEach(function (img) { tl.fromTo(img, { scale: 1.18 }, { scale: 1, duration: 1.8, ease: "expo.out", clearProps: "transform" }, .45); });
 
     tl.add(function () {
       $$(".hero [data-inview], .phero [data-inview], .hero, .phero").forEach(function (el) { el.classList.add("is-in"); });
