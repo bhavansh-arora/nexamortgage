@@ -976,3 +976,37 @@ html.anim .split .line > span { transform: translateY(110%); }
 @media (max-width: 760px) { .programs .program { padding: 20px; gap: 18px; } .program__icon { width: 42px; height: 42px; } }
 
 @media (max-width: 1024px) { .hs__head { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- "How it works" route graphic ---------- */
+.hs__aside { gap: 12px; }
+.route { padding: 18px 22px 16px; border-radius: 22px; background: linear-gradient(160deg, rgba(var(--on-dark-rgb), .08), rgba(var(--on-dark-rgb), .03)); box-shadow: inset 0 0 0 1px var(--line); }
+.route__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.route__track { position: relative; }
+.route__line { position: absolute; left: 22px; right: 22px; top: 21px; height: 2px; background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 12px); }
+.route__line i { display: block; height: 100%; background: var(--gold); transform-origin: left; transform: scaleX(0); box-shadow: 0 0 12px rgba(var(--gold-rgb), .7); }
+.route__nodes { position: relative; display: flex; justify-content: space-between; }
+.route__nodes li { display: grid; justify-items: center; gap: 8px; width: 44px; }
+.route__dot { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: var(--on-dark-3); box-shadow: inset 0 0 0 1.5px var(--line-2); transition: background .5s, color .5s, box-shadow .5s, transform .6s var(--ease); }
+.route__dot svg { width: 20px; height: 20px; }
+.route__lbl { font-size: 12px; font-weight: 600; color: var(--on-dark-3); white-space: nowrap; transition: color .4s; }
+.route__nodes li.is-done .route__dot { color: var(--gold); box-shadow: inset 0 0 0 1.5px var(--gold); }
+.route__nodes li.is-on .route__dot { background: var(--gold); color: var(--ink); box-shadow: 0 0 0 6px rgba(var(--gold-rgb), .18), 0 0 30px rgba(var(--gold-rgb), .5); transform: scale(1.1); }
+.route__nodes li.is-on .route__lbl, .route__nodes li.is-done .route__lbl { color: var(--on-dark); }
+.hs__strip { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.hs__gold { position: relative; overflow: hidden; isolation: isolate; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 20px; background: linear-gradient(135deg, var(--gold-2), var(--gold) 60%); color: var(--ink); box-shadow: 0 24px 48px -24px rgba(var(--gold-rgb), .7); }
+.hs__gold::after { content: ""; position: absolute; z-index: -1; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%; border: 1px solid rgba(var(--ink-rgb), .18); box-shadow: 0 0 0 18px rgba(var(--ink-rgb), .05); }
+.hs__gold .ic { width: 46px; height: 46px; flex: none; border-radius: 14px; display: grid; place-items: center; background: var(--ink); color: var(--gold); }
+.hs__gold .ic svg { width: 22px; height: 22px; }
+.hs__gold b { display: block; font-family: var(--ff-display); font-weight: 800; font-size: clamp(2rem, 2.8vw, 2.5rem); letter-spacing: -.05em; line-height: .9; }
+.hs__gold b small { font-size: .42em; margin-left: 4px; letter-spacing: 0; font-weight: 700; }
+.hs__gold span:not(.ic) { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; color: rgba(var(--ink-rgb), .7); }
+.hs__pill { display: grid; align-content: center; padding: 14px 16px; border-radius: 20px; background: rgba(var(--on-dark-rgb), .06); box-shadow: inset 0 0 0 1px var(--line); }
+.hs__pill b { font-family: var(--ff-display); font-weight: 750; font-size: clamp(1.6rem, 2.2vw, 2rem); letter-spacing: -.045em; line-height: 1; }
+.hs__pill b small { font-size: .5em; color: var(--gold); margin-left: 2px; }
+.hs__pill span { margin-top: 4px; font-size: 12.5px; color: var(--on-dark-2); }
+@media (max-width: 760px) {
+  .route { padding: 16px 16px 14px; }
+  .route__dot { width: 40px; height: 40px; } .route__nodes li { width: 40px; } .route__line { left: 20px; right: 20px; top: 19px; }
+  .hs__strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hs__gold { grid-column: 1 / -1; }
+}
