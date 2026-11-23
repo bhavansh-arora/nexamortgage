@@ -140,7 +140,7 @@
       var chars = splitWord(cWord);
       houseLen(); cHouse.forEach(function (p) { p.style.strokeDashoffset = 0; });
       gsap.set(cFill, { clipPath: "inset(0px 0px 0px 0px round 0px)", opacity: 1 });
-      var released = false, release = function () { if (released) return; released = true; doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel], { clearProps: "all" }); if (lenis) lenis.start(); };
+      var released = false, release = function () { if (released) return; released = true; doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel, ".curtain__label .mk", ".curtain__label small", ".curtain__house"], { clearProps: "all" }); if (lenis) lenis.start(); };
       setTimeout(function () { if (!released) { release(); introBackstop(); } }, 3500);
       gsap.timeline({ delay: .08, onComplete: release })
         .to(chars, { yPercent: -110, duration: .6, ease: "expo.in", stagger: .02 })
@@ -176,6 +176,8 @@
     gsap.set(chars, { yPercent: 110 });
     gsap.set(".curtain__label .mk", { scale: 0, rotate: -90 });
     gsap.set(".curtain__label small", { opacity: 0, y: 10 });
+    // the arrival fade leaves these hidden on this page: reset them for every leave
+    gsap.set(".curtain__house", { opacity: 1, y: 0 });
     var gone = false, go = function () { if (gone) return; gone = true; window.location.href = href; };
     setTimeout(go, 2600); // backstop: some in-app browsers pause animation frames
     var tl = gsap.timeline({ onComplete: go });
