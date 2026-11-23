@@ -87,8 +87,8 @@ PRELOADER = """<div class="preloader" aria-hidden="true">
   <div class="preloader__bottom"><span class="preloader__count">000</span><span class="preloader__bar"><i></i></span><span>NMLS #2006359</span></div>
 </div>
 <div class="curtain" aria-hidden="true">
-  <div class="curtain__layer"></div><div class="curtain__layer"></div><div class="curtain__layer"></div>
-  <div class="curtain__label"><span class="mk">d</span><b>Closing with Daniel</b><small>Closing with Daniel · DSCR &amp; investor lending</small></div>
+  <div class="curtain__fill"></div><div class="curtain__ring"></div>
+  <div class="curtain__label"><span class="mk">d</span><b>Closing with Daniel</b><span class="curtain__house">""" + HOUSE_ART + """</span><small>Closing with Daniel · DSCR &amp; investor lending</small></div>
 </div>
 <script>try{var l=sessionStorage.getItem('cwd-label');if(l&&document.documentElement.classList.contains('curtain-in'))document.querySelector('.curtain__label b').textContent=l;}catch(e){}</script>
 """

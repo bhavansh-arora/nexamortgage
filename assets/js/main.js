@@ -49,17 +49,26 @@
   var showPre = pre && !doc.classList.contains("no-preload");
   var cameByNav = doc.classList.contains("curtain-in");
   var LABELS = { "index.html": "Home", "": "Home", "dscr-loans.html": "DSCR Loans", "loan-programs.html": "Loan Programs", "about.html": "About Daniel", "learn.html": "The Playbook", "contact.html": "Run my deal" };
-  var curtainLayers = curtain ? $$(".curtain__layer", curtain) : [];
+  var cFill = curtain ? $(".curtain__fill", curtain) : null;
+  var cRing = curtain ? $(".curtain__ring", curtain) : null;
   var cLabel = curtain ? $(".curtain__label", curtain) : null;
+  var cWord = curtain ? $(".curtain__label b", curtain) : null;
+  var cHouse = curtain ? $$(".curtain__house path", curtain) : [];
   var frameRadius = function () {
     var cs = getComputedStyle(doc);
     return { f: parseFloat(cs.getPropertyValue("--frame")) || 12, r: parseFloat(getComputedStyle($(".panel") || doc.body).borderTopLeftRadius) || 30 };
   };
+  var panelInset = function () { var fr = frameRadius(); return "inset(" + fr.f + "px " + fr.f + "px " + fr.f + "px " + fr.f + "px round " + fr.r + "px)"; };
+  function splitWord(el) {
+    if (!el) return [];
+    var txt = el.textContent; el.textContent = "";
+    return txt.split("").map(function (ch) { var s = document.createElement("span"); s.className = "ch"; s.textContent = ch === " " ? " " : ch; el.appendChild(s); return s; });
+  }
+  function houseLen() { cHouse.forEach(function (p) { var L = p.getTotalLength ? p.getTotalLength() : 300; p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.dataset.len = L; }); }
 
   if (showPre && hasGSAP && !reduced) {
     if (lenis) lenis.stop();
     var cnt = { v: 0 }, cEl = $(".preloader__count", pre), words = $$(".preloader__words .w > i", pre);
-    var fr = frameRadius();
     gsap.set(words, { yPercent: 110 });
     gsap.timeline({ onComplete: function () { pre.remove(); if (lenis) lenis.start(); } })
       .from(".preloader__top, .preloader__bottom", { opacity: 0, y: 12, duration: .6, ease: "power2.out", stagger: .05 })
@@ -68,19 +77,23 @@
       .to(".preloader__bar i", { scaleX: 1, duration: 1.25, ease: "power2.inOut" }, "<")
       .to(words, { yPercent: -110, duration: .6, ease: "expo.in", stagger: .03 })
       .to(".preloader__top, .preloader__bottom", { opacity: 0, duration: .4 }, "<")
-      // the loader shrinks into the exact shape of the hero panel, then dissolves into it
-      .to(pre, { clipPath: "inset(" + fr.f + "px " + fr.f + "px " + fr.f + "px " + fr.f + "px round " + fr.r + "px)", duration: .9, ease: "expo.inOut" }, "-=.15")
+      .to(pre, { clipPath: panelInset(), duration: .9, ease: "expo.inOut" }, "-=.15")
       .add(pageIntro, "-=.55")
       .to(pre, { opacity: 0, duration: .6, ease: "power1.out" }, "-=.5");
   } else {
     if (pre) pre.remove();
     if (cameByNav && hasGSAP && !reduced && curtain) {
+      // arrival: the name lifts away, then the cover shrinks into this page's hero panel and melts into it
       if (lenis) lenis.stop();
-      gsap.set(curtainLayers, { y: 0, yPercent: 0, borderRadius: 0 });
-      gsap.timeline({ delay: .05, onComplete: function () { doc.classList.remove("curtain-in"); gsap.set(curtainLayers.concat([cLabel]), { clearProps: "all" }); if (lenis) lenis.start(); } })
-        .to(cLabel, { yPercent: -40, opacity: 0, duration: .45, ease: "power2.in" })
-        .to(curtainLayers.slice().reverse(), { yPercent: -100, borderBottomLeftRadius: "50% 18vh", borderBottomRightRadius: "50% 18vh", duration: .9, ease: "expo.inOut", stagger: .08 }, "-=.15")
-        .add(pageIntro, "-=.55");
+      var chars = splitWord(cWord);
+      houseLen(); cHouse.forEach(function (p) { p.style.strokeDashoffset = 0; });
+      gsap.set(cFill, { clipPath: "inset(0px 0px 0px 0px round 0px)", opacity: 1 });
+      gsap.timeline({ delay: .08, onComplete: function () { doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel], { clearProps: "all" }); if (lenis) lenis.start(); } })
+        .to(chars, { yPercent: -110, duration: .45, ease: "expo.in", stagger: .014 })
+        .to(".curtain__label .mk, .curtain__label small, .curtain__house", { opacity: 0, y: -16, duration: .4, ease: "power2.in" }, "<")
+        .to(cFill, { clipPath: panelInset(), duration: .8, ease: "expo.inOut" }, "-=.3")
+        .add(pageIntro, "-=.45")
+        .to(cFill, { opacity: 0, duration: .55, ease: "power1.out" }, "-=.4");
     } else {
       doc.classList.remove("curtain-in");
       pageIntro();
@@ -88,21 +101,35 @@
   }
   store.del("cwd-nav");
 
-  // leaving: three stacked curtainLayers sweep up with a curved leading edge and name the destination
-  function leave(href) {
-    var page = href.split("#")[0].split("/").pop();
+  // leaving: a deep-green circle grows from the exact click point, edged by a brass ring,
+  // while the destination name rises letter by letter and the house line-art draws itself
+  function leave(href, x, y) {
+    var page = href.split("#")[0].split("?")[0].split("/").pop();
     var label = LABELS[page] || "Closing with Daniel";
     store.set("cwd-nav", "1"); store.set("cwd-label", label);
     if (!curtain || !hasGSAP) { window.location.href = href; return; }
-    $(".curtain__label b", curtain).textContent = label;
+    cWord.textContent = label;
+    var chars = splitWord(cWord);
+    houseLen();
+    var W = window.innerWidth, H = window.innerHeight;
+    if (x == null) { x = W / 2; y = H / 2; }
+    var R = Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) + 40;
     doc.classList.add("is-leaving");
     if (lenis) lenis.stop();
-    gsap.set(curtainLayers, { y: 0, yPercent: 100, borderTopLeftRadius: "50% 18vh", borderTopRightRadius: "50% 18vh" });
-    gsap.set(cLabel, { opacity: 0, yPercent: 40 });
-    gsap.timeline({ onComplete: function () { window.location.href = href; } })
-      .to(curtainLayers, { yPercent: 0, borderTopLeftRadius: "0% 0vh", borderTopRightRadius: "0% 0vh", duration: .85, ease: "expo.inOut", stagger: .08 })
-      .to(cLabel, { opacity: 1, yPercent: 0, duration: .5, ease: "expo.out" }, "-=.35")
-      .to({}, { duration: .12 });
+    gsap.set(cFill, { clipPath: "circle(0px at " + x + "px " + y + "px)", opacity: 1 });
+    gsap.set(cRing, { left: x, top: y, width: 2 * R, height: 2 * R, xPercent: -50, yPercent: -50, scale: 0, opacity: 1 });
+    gsap.set(cLabel, { opacity: 1 });
+    gsap.set(chars, { yPercent: 110 });
+    gsap.set(".curtain__label .mk", { scale: 0, rotate: -90 });
+    gsap.set(".curtain__label small", { opacity: 0, y: 10 });
+    var tl = gsap.timeline({ onComplete: function () { window.location.href = href; } });
+    tl.to(cRing, { scale: 1.02, duration: .75, ease: "expo.inOut" }, 0)
+      .to(cRing, { opacity: 0, duration: .25 }, .55)
+      .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: .75, ease: "expo.inOut" }, .04)
+      .to(".curtain__label .mk", { scale: 1, rotate: 0, duration: .6, ease: "back.out(2)" }, .35)
+      .to(chars, { yPercent: 0, duration: .55, ease: "expo.out", stagger: .018 }, .38)
+      .to(cHouse, { strokeDashoffset: 0, duration: .7, ease: "power2.inOut", stagger: .02 }, .35)
+      .to(".curtain__label small", { opacity: 1, y: 0, duration: .4, ease: "expo.out" }, .55);
   }
 
   var prefetched = {};
@@ -110,7 +137,7 @@
     var href = a.getAttribute("href");
     if (!href || href.charAt(0) === "#" || a.target === "_blank" || /^(mailto|tel|https?):/i.test(href) || a.hasAttribute("download")) return;
     var warm = function () {
-      var u = href.split("#")[0]; if (!u || prefetched[u]) return; prefetched[u] = 1;
+      var u = href.split("#")[0].split("?")[0]; if (!u || prefetched[u]) return; prefetched[u] = 1;
       var l = document.createElement("link"); l.rel = "prefetch"; l.href = u; document.head.appendChild(l);
     };
     a.addEventListener("mouseenter", warm, { passive: true });
@@ -118,18 +145,31 @@
     a.addEventListener("click", function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || reduced) return;
       var here = location.pathname.split("/").pop() || "index.html";
-      var target = href.split("#")[0];
-      if (target === here && href.indexOf("#") > -1) { var t = $("#" + href.split("#")[1]); if (t) { e.preventDefault(); setMenu(false); scrollToEl(t); return; } }
-      if (doc.classList.contains("is-leaving")) { e.preventDefault(); return; }
+      var target = href.split("#")[0].split("?")[0];
+      if (target === here && href.indexOf("#") > -1 && href.indexOf("?") < 0) { var t = $("#" + href.split("#")[1]); if (t) { e.preventDefault(); setMenu(false); scrollToEl(t); return; } }
       e.preventDefault();
-      leave(href);
+      if (doc.classList.contains("is-leaving")) return;
+      var x = e.clientX, y = e.clientY;
+      if (!x && !y) { var r = a.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2; }
+      leave(href, x, y);
     });
   });
   window.addEventListener("pageshow", function (e) {
     if (!e.persisted) return;
     doc.classList.remove("is-leaving", "curtain-in");
-    if (hasGSAP && curtainLayers.length) gsap.set(curtainLayers.concat([cLabel]), { clearProps: "all" });
+    if (hasGSAP && curtain) gsap.set([cFill, cRing, cLabel], { clearProps: "all" });
     if (lenis) lenis.start();
+  });
+
+  /* ---------- Tickers fill the full width, at any screen size ---------- */
+  $$(".ticker__track").forEach(function (track) {
+    var kids = Array.prototype.slice.call(track.children);
+    var half = kids.slice(0, Math.ceil(kids.length / 2));
+    track.innerHTML = ""; half.forEach(function (k) { track.appendChild(k); });
+    var box = track.parentElement.getBoundingClientRect().width || window.innerWidth;
+    var guard = 0;
+    while (track.scrollWidth < box + 200 && guard++ < 12) half.forEach(function (k) { track.appendChild(k.cloneNode(true)); });
+    Array.prototype.slice.call(track.children).forEach(function (k) { track.appendChild(k.cloneNode(true)); });
   });
 
   /* ---------- Rings ---------- */
@@ -502,6 +542,11 @@
       if (form.elements["rent"]) form.elements["rent"].value = q.get("rent");
       if (q.get("type") === "str") { var s = form.querySelector('input[name="ptype"][value="Short-term rental"]'); if (s) s.checked = true; }
       if (form.elements["dscr_est"]) form.elements["dscr_est"].value = q.get("dscr");
+    } else if (q.get("program") && pill) {
+      pill.classList.add("is-on");
+      $(".deal-pill [data-label]").textContent = "Interested in:";
+      $("[data-deal]", pill).textContent = q.get("program");
+      if (form.elements["fit"]) form.elements["fit"].value = q.get("program");
     } else if (q.get("fit") && pill) {
       pill.classList.add("is-on");
       $(".deal-pill [data-label]").textContent = "Fit Finder match:";
