@@ -1121,3 +1121,5 @@ html.anim .split .line > span { transform: translateY(110%); }
 .tile__quote { position: absolute; right: 18px; bottom: -40px; z-index: -1; font-family: var(--ff-serif); font-size: 200px; line-height: 1; color: rgba(var(--gold-rgb), .18); pointer-events: none; }
 @media (max-width: 760px) { .net { width: 112px; } .tile__split { gap: 12px; } .pgrid { gap: 4px; } .pgrid span { font-size: 7.5px; border-radius: 6px; } }
 @media (max-width: 380px) { .pgrid span { font-size: 0; } }
+
+.footer__legal .build { font-family: var(--ff-mono); font-size: 10.5px; opacity: .55; }

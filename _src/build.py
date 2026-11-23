@@ -207,7 +207,7 @@ FOOTER = f"""<footer class="footer">
     <div class="footer__word" aria-hidden="true">Closing <em>with</em> Daniel</div>
     <div class="footer__legal">
       <p>Daniel Stephens, Mortgage Loan Officer, NMLS #{SITE['nmls']}. NEXA Lending, 5559 S Sossaman Rd, Bldg 1, Ste 101, Mesa, AZ 85212. Company NMLS #1660690. <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener">NMLS Consumer Access</a>. Equal Housing Opportunity. This is not a commitment to lend. Programs, rates, terms and conditions are subject to change without notice and subject to borrower and property qualification. Calculator and Fit Finder results are estimates for illustration only.</p>
-      <p class="r"><span>© <span data-year>2026</span> Closing with Daniel</span><a href="#main" data-top>Back to top ↑</a></p>
+      <p class="r"><span>© <span data-year>2026</span> Closing with Daniel</span><span class="build" title="Site version">v __BUILD__</span><a href="#main" data-top>Back to top ↑</a></p>
     </div>
   </div>
 </footer>
@@ -296,7 +296,7 @@ def build():
                 + PRELOADER + header(file) + '<main id="main">\n' + body + "\n</main>\n" + FOOTER)
         # cache-busting: the version changes whenever the file changes, so browsers and CDNs
         # can never pair a new page with an old stylesheet or script
-        html = html.replace("__CSSV__", asset_version("assets/css/style.css")).replace("__JSV__", asset_version("assets/js/main.js"))
+        html = html.replace("__CSSV__", asset_version("assets/css/style.css")).replace("__JSV__", asset_version("assets/js/main.js")).replace("__BUILD__", (asset_version("assets/css/style.css")[:3] + asset_version("assets/js/main.js")[:3]))
         (ROOT / file).write_text(html)
         print("built", file)
 
