@@ -82,14 +82,15 @@ ARCS = '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-widt
 HOUSE_ART = '''<svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 290h360"/><path d="M60 290V150l110-90 110 90v140"/><path d="M40 166L170 58l130 108"/><path d="M230 98V52h28v68"/><path d="M140 290v-80h60v80"/><path d="M188 252h4"/><path d="M84 180h40v40H84zM104 180v40M84 200h40"/><path d="M216 180h40v40h-40zM236 180v40M216 200h40"/><path d="M150 120a20 20 0 0140 0v20h-40z"/><path d="M300 290v-60c0-20 30-20 30 0v60M315 232v58"/><path d="M330 250c18-6 30 4 30 18M340 290c0-24 30-30 40-14"/></svg>'''
 
 PRELOADER = """<div class="preloader" aria-hidden="true">
-  <div class="preloader__inner">
-    <div class="preloader__mark">d</div>
-    <div class="preloader__word">Let the property qualify itself.</div>
-    <div class="preloader__bar"><i></i></div>
-    <div class="preloader__count"><span>000</span></div>
-  </div>
+  <div class="preloader__top"><span class="preloader__brand"><i>d</i>Closing with Daniel</span><span>DSCR &amp; investor lending · IN &amp; KY</span></div>
+  <div class="preloader__words"><span class="w"><i>Let</i></span> <span class="w"><i>the</i></span> <span class="w"><i>property</i></span> <span class="w w--serif"><i>qualify</i></span> <span class="w"><i>itself.</i></span></div>
+  <div class="preloader__bottom"><span class="preloader__count">000</span><span class="preloader__bar"><i></i></span><span>NMLS #2006359</span></div>
 </div>
-<div class="curtain" aria-hidden="true"><span>Closing with Daniel</span></div>
+<div class="curtain" aria-hidden="true">
+  <div class="curtain__layer"></div><div class="curtain__layer"></div><div class="curtain__layer"></div>
+  <div class="curtain__label"><span class="mk">d</span><b>Closing with Daniel</b><small>Closing with Daniel · DSCR &amp; investor lending</small></div>
+</div>
+<script>try{var l=sessionStorage.getItem('cwd-label');if(l&&document.documentElement.classList.contains('curtain-in'))document.querySelector('.curtain__label b').textContent=l;}catch(e){}</script>
 """
 
 HEAD = """<!doctype html>

@@ -29,14 +29,15 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="preloader" aria-hidden="true">
-  <div class="preloader__inner">
-    <div class="preloader__mark">d</div>
-    <div class="preloader__word">Let the property qualify itself.</div>
-    <div class="preloader__bar"><i></i></div>
-    <div class="preloader__count"><span>000</span></div>
-  </div>
+  <div class="preloader__top"><span class="preloader__brand"><i>d</i>Closing with Daniel</span><span>DSCR &amp; investor lending · IN &amp; KY</span></div>
+  <div class="preloader__words"><span class="w"><i>Let</i></span> <span class="w"><i>the</i></span> <span class="w"><i>property</i></span> <span class="w w--serif"><i>qualify</i></span> <span class="w"><i>itself.</i></span></div>
+  <div class="preloader__bottom"><span class="preloader__count">000</span><span class="preloader__bar"><i></i></span><span>NMLS #2006359</span></div>
 </div>
-<div class="curtain" aria-hidden="true"><span>Closing with Daniel</span></div>
+<div class="curtain" aria-hidden="true">
+  <div class="curtain__layer"></div><div class="curtain__layer"></div><div class="curtain__layer"></div>
+  <div class="curtain__label"><span class="mk">d</span><b>Closing with Daniel</b><small>Closing with Daniel · DSCR &amp; investor lending</small></div>
+</div>
+<script>try{var l=sessionStorage.getItem('cwd-label');if(l&&document.documentElement.classList.contains('curtain-in'))document.querySelector('.curtain__label b').textContent=l;}catch(e){}</script>
 <header class="header">
   <div class="header__bar">
     <a class="brand" href="index.html" aria-label="Closing with Daniel, home">
