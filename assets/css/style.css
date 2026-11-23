@@ -1091,3 +1091,4 @@ html.anim .split .line > span { transform: translateY(110%); }
 .is-in .eq span:nth-child(2) { transition-delay: .12s; } .is-in .eq span:nth-child(3) { transition-delay: .24s; } .is-in .eq span:nth-child(4) { transition-delay: .36s; } .is-in .eq span:nth-child(5) { transition-delay: .5s; }
 .tile--gold .tile__corner { animation: nudge 2.6s ease-in-out infinite; }
 @keyframes nudge { 0%, 70%, 100% { transform: none; } 80% { transform: translate(3px, -3px); } 90% { transform: translate(0, 0); } }
+@media (max-width: 760px) { .tile:has(> .tile__corner) h3 { padding-right: 52px; } }
