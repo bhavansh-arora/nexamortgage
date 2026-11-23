@@ -171,7 +171,7 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
       <div class="head__aside"><p class="lead" data-reveal>Investors don't need promises. They need a lender network wide enough to say yes, and a loan officer fast enough to make it count.</p></div>
     </div>
     <div class="bento">
-      <div class="tile tile--plum2 c-7 r-2" data-reveal>
+      <div class="tile tile--plum2 tile--speed c-7 r-2" data-reveal>
         <span class="rings-tex" aria-hidden="true" style="color:var(--gold)"></span>
         <span class="kicker">Speed</span>
         <div class="tile-row">
@@ -185,7 +185,7 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
             <span class="trust__lead" style="background:rgba(var(--on-dark-rgb), .08);box-shadow:inset 0 0 0 1px var(--line);color:var(--on-dark);justify-self:start"><span class="faces"><img src="assets/img/daniel.jpg" alt="" width="32" height="32" style="border-color:var(--plum-800)"></span>Daniel takes every file to closing</span>
           </div>
         </div>
-        <span class="dots-tex" aria-hidden="true" style="color:var(--gold);right:auto;left:24px;bottom:24px;width:120px;height:60px"></span>
+        <div class="speed-steps"><div><b>01</b><span>Send the deal, no credit pull</span></div><div><b>02</b><span>Appraisal confirms value &amp; rent</span></div><div><b>03</b><span>Close, then repeat faster</span></div></div>
       </div>
       <div class="tile tile--sand c-5" data-reveal>
         <span class="kicker">Reach</span>
@@ -345,24 +345,20 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
         <img src="assets/img/daniel.jpg" alt="Daniel Stephens in front of the Closing with Daniel wall" loading="lazy" width="1000" height="1500">
         <div class="meet-photo__tag"><b>Daniel Stephens</b><span>NMLS #2006359</span></div>
       </div>
-      <div class="tile tile--paper c-5" data-inview>
+      <div class="tile tile--paper c-8" data-inview>
         <div><span class="eyebrow" data-reveal>Meet Daniel</span>
         <h2 class="h2 split" style="margin-top:20px;font-size:clamp(2rem,3.4vw,3.3rem)"><span class="line"><span>Loan officer.</span></span><span class="line"><span><em>Problem solver.</em></span></span><span class="line"><span>Straight shooter.</span></span></h2></div>
         <p class="p-dim" data-reveal>Daniel is the licensed loan officer who takes every file from application to closing himself. What he loves most is the puzzle: the file rarely comes together in a straight line, and his job is to find the path that works.</p>
         <div class="btn-row" data-reveal><a class="btn btn--dark" href="about.html">Daniel's story <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
       </div>
-      <div class="tile tile--plum c-3" data-reveal>
-        <span class="kicker">His rule</span>
-        <p class="h3" style="font-size:clamp(1.4rem,1.9vw,1.8rem)">Do it right, <em>every time,</em> even when it's slower or harder.</p>
-      </div>
-      <div class="tile tile--mint c-5" data-reveal>
+      <div class="tile tile--mint c-5 meet-cred" data-reveal>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="eyebrow">Licensed &amp; verified</span><span class="kicker">IN · KY</span></div>
         <div class="cred"><span><b>NMLS</b>2006359</span><span><b>NEXA</b>NMLS 1660690</span><span><b>IN</b>Licensed</span><span><b>KY</b>Licensed</span><span><b>EHO</b>Equal Housing</span></div>
         <p class="p-dim" style="font-size:14px">Verify any license on <a class="tlink" href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener" style="font-size:14px">NMLS Consumer Access</a></p>
       </div>
-      <div class="tile tile--sand c-3" data-reveal>
-        <span class="program__cat">The promise</span>
-        <p class="h3" style="font-size:clamp(1.4rem,1.9vw,1.8rem)">No pressure. No confusion. <em>A clear path to closing.</em></p>
+      <div class="tile tile--plum c-3 meet-rule" data-reveal>
+        <span class="kicker">His rule</span>
+        <p class="h3" style="font-size:clamp(1.4rem,1.9vw,1.8rem)">Do it right, <em>every time,</em> even when it's slower or harder.</p>
       </div>
     </div>
   </div>
@@ -428,6 +424,7 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
           <li><div><b>Cash-out refinance closed</b><span>The client walked away with equity in hand.</span></div></li>
         </ol>
         <p class="case__quote">“The deal didn't change. The way we looked at it did.”</p>
+        <a class="btn" href="contact.html">Got a “no”? Get a second look <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
       <div class="tile tile--sand compare" data-compare data-reveal>
         <span class="kicker">Same property, two lenses</span>
@@ -450,7 +447,6 @@ setTimeout(function(){if(!window.__animReady){h.classList.remove('anim','curtain
           </div>
         </div>
         <p class="p-dim" style="font-size:12.5px">Bars are illustrative. The client's actual figures are private.</p>
-        <a class="btn btn--dark" href="contact.html" style="justify-self:start">Got a “no”? Get a second look <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
     </div>
   </div>
