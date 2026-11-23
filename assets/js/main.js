@@ -240,10 +240,19 @@
 
     // supporting pieces arrive from their own sides
     var revealEls = $$(".hero [data-reveal], .phero [data-reveal]").filter(function (el) { return !el.classList.contains("hero__figure") && !el.classList.contains("badge-spin"); });
-    revealEls.forEach(function (el, i) {
-      var r = el.getBoundingClientRect(), fromX = r.left + r.width / 2 > window.innerWidth / 2 ? 40 : -40;
-      if (el.closest(".hero__top, .phero__crumbs") || el.classList.contains("hero__top")) fromX = 0;
-      tl.fromTo(el, { opacity: 0, x: fromX, y: 24 }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 1.2 }, .6 + i * .07);
+    // left and right halves arrive together as mirrored pairs (row by row, top to bottom),
+    // so neither side lags behind the other
+    var rows = [];
+    revealEls.forEach(function (el) {
+      var r = el.getBoundingClientRect(), right = r.left + r.width / 2 > window.innerWidth / 2;
+      var fromX = el.closest(".hero__top, .phero__crumbs") || el.classList.contains("hero__top") ? 0 : (right ? 40 : -40);
+      var side = fromX === 0 ? "c" : (right ? "r" : "l");
+      rows.push({ el: el, x: fromX, side: side, top: r.top });
+    });
+    var sideIdx = { l: 0, r: 0, c: 0 };
+    rows.sort(function (a, b) { return a.top - b.top; }).forEach(function (o) {
+      var k = sideIdx[o.side]++;
+      tl.fromTo(o.el, { opacity: 0, x: o.x, y: 24 }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 1.1 }, .55 + k * .08);
     });
     var badge = $(".badge-spin");
     if (badge) tl.fromTo(badge, { scale: 0, rotate: -160, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, duration: 1.4, ease: "back.out(1.6)" }, 1.0);
@@ -255,7 +264,13 @@
     tl.add(function () {
       $$(".hero [data-inview], .phero [data-inview], .hero, .phero").forEach(function (el) { el.classList.add("is-in"); });
     }, .9);
-    tl.add(function () { $$(".hero [data-ring], .phero [data-ring]").forEach(function (r) { setRing(r); }); }, 1.0);
+    // ring and counters fill while their cards fade in, not after
+    tl.add(function () { $$(".hero [data-ring], .phero [data-ring]").forEach(function (r) { setRing(r); }); }, .6);
+    $$(".hero [data-count], .phero [data-count]").forEach(function (el) {
+      var end = parseFloat(el.getAttribute("data-count")), dec = parseInt(el.getAttribute("data-dec") || "0", 10), o = { v: 0 };
+      el.textContent = (0).toFixed(dec);
+      tl.to(o, { v: end, duration: 1.6, ease: "power3.out", onUpdate: function () { el.textContent = dec ? o.v.toFixed(dec) : Math.round(o.v).toLocaleString("en-US"); } }, .6);
+    });
     gsap.delayedCall(1.2, initScroll);
   }
 
@@ -287,7 +302,7 @@
     var steps = [];
     var notHero = function (el) { return !el.closest(".hero, .phero"); };
     var splits = $$(".split").filter(notHero);
-    var counters = $$("[data-count]");
+    var counters = $$("[data-count]").filter(notHero); // hero counters already ran in the intro
 
     // 1) all style writes first, in one go (no layout reads in between)
     steps.push(function () {
