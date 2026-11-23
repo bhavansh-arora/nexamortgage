@@ -225,7 +225,8 @@ html.curtain-in .curtain__label { opacity: 1; }
 .curtain__label b { display: block; overflow: hidden; padding: 0 .08em .16em; font-family: var(--ff-serif); font-style: italic; font-weight: 400; font-size: clamp(2.8rem, 8vw, 7rem); line-height: 1; letter-spacing: -.02em; color: var(--gold); }
 .curtain__label b .ch { display: inline-block; }
 .curtain__label small { font-size: 11.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--on-dark-2); }
-.curtain__house { width: clamp(110px, 12vw, 160px); color: var(--gold); opacity: .8; }
+.curtain__house { width: clamp(170px, 17vw, 240px); color: var(--gold); opacity: 1; filter: drop-shadow(0 0 10px rgba(var(--gold-rgb), .35)); }
+.curtain__house path { stroke-width: 2; }
 .curtain__house svg { width: 100%; height: auto; }
 .hero__title .t2 .ch { display: inline-block; }
 
@@ -667,7 +668,7 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.18); }
 .cta__chips svg { width: 14px; height: 14px; color: var(--gold); }
 .cta__art { position: absolute; left: 1%; bottom: -2px; width: clamp(220px, 27vw, 400px); color: var(--gold); opacity: .5; z-index: -1; }
 .cta__art--r { left: auto; right: 1%; width: clamp(160px, 19vw, 280px); opacity: .32; transform: scaleX(-1); }
-.cta__art path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1); }
+.cta__art path { stroke-dasharray: var(--len, 1200) var(--len, 1200); stroke-dashoffset: var(--len, 1200); transition: stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1); }
 .cta__art path:nth-child(3n+2) { transition-delay: .15s; } .cta__art path:nth-child(3n) { transition-delay: .3s; }
 .is-in .cta__art path, html:not(.anim) .cta__art path { stroke-dashoffset: 0; }
 
@@ -1098,7 +1099,7 @@ html.anim .split .line > span { transform: translateY(110%); }
 .net { width: clamp(120px, 11vw, 150px); height: auto; overflow: visible; }
 .net__orbit { fill: none; stroke: rgba(var(--ink-rgb), .16); stroke-dasharray: 2 4; }
 .net__orbit--in { stroke-dasharray: none; stroke: rgba(var(--ink-rgb), .1); }
-.net__lines line { stroke: var(--gold-deep); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .7; transition: stroke-dashoffset .8s cubic-bezier(.22,1,.36,1) var(--d); }
+.net__lines line { stroke: var(--gold-deep); stroke-width: 1; stroke-dasharray: var(--len, 60) var(--len, 60); stroke-dashoffset: var(--len, 60); opacity: .7; transition: stroke-dashoffset .8s cubic-bezier(.22,1,.36,1) var(--d); }
 .net__dots circle { fill: var(--plum-700); transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .6s cubic-bezier(.34,1.8,.64,1) var(--d); }
 .net__dots circle:nth-child(3n+1) { fill: var(--gold-deep); }
 .net__core { fill: var(--plum-800); }

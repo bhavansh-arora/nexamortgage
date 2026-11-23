@@ -66,7 +66,9 @@
     return txt.split("").map(function (ch) { var s = document.createElement("span"); s.className = "ch"; s.textContent = ch === " " ? " " : ch; el.appendChild(s); return s; });
   }
   // paths use pathLength="1", so every segment draws from 1 to 0 whatever its real length
-  function houseLen() { cHouse.forEach(function (p) { p.style.strokeDasharray = 1; p.style.strokeDashoffset = 1; }); }
+  // measure each line's real length (works in Safari, which ignores pathLength for dashes)
+  function measurePath(p) { var L = 0; try { L = p.getTotalLength(); } catch (e) {} return Math.ceil(L) + 2 || 600; }
+  function houseLen() { cHouse.forEach(function (p) { var L = measurePath(p); p.style.strokeDasharray = L + " " + L; p.style.strokeDashoffset = L; }); }
 
   if (showPre && hasGSAP && !reduced) {
     doc.classList.remove("curtain-in");
@@ -182,7 +184,7 @@
       .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: 1.05, ease: "expo.inOut" }, .06)
       .to(".curtain__label .mk", { scale: 1, rotate: 0, duration: .75, ease: "back.out(1.8)" }, .55)
       .to(chars, { yPercent: 0, duration: .8, ease: "expo.out", stagger: .028 }, .6)
-      .to(cHouse, { strokeDashoffset: 0, duration: .8, ease: "power2.inOut", stagger: .02 }, .3)
+      .to(cHouse, { strokeDashoffset: 0, duration: .75, ease: "power1.inOut", stagger: .06 }, .2)
       .to(".curtain__label small", { opacity: 1, y: 0, duration: .55, ease: "expo.out" }, .85)
       .to({}, { duration: .18 });
   }
@@ -697,5 +699,6 @@
     });
   }
 
+  $$(".cta__art path, .net__lines line").forEach(function (p) { p.style.setProperty("--len", measurePath(p)); });
   $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();
