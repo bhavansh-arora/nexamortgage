@@ -46,7 +46,8 @@
   /* ---------- Preloader / page transitions ---------- */
   var pre = $(".preloader");
   var curtain = $(".curtain");
-  var showPre = pre && !doc.classList.contains("no-preload");
+  // arriving from a page change always uses the cover, never the first-visit intro
+  var showPre = pre && !doc.classList.contains("no-preload") && !doc.classList.contains("curtain-in");
   var cameByNav = doc.classList.contains("curtain-in");
   var LABELS = { "index.html": "Home", "": "Home", "dscr-loans.html": "DSCR Loans", "loan-programs.html": "Loan Programs", "about.html": "About Daniel", "learn.html": "The Playbook", "contact.html": "Run my deal" };
   var cFill = curtain ? $(".curtain__fill", curtain) : null;
@@ -68,6 +69,7 @@
   function houseLen() { cHouse.forEach(function (p) { p.style.strokeDasharray = 1; p.style.strokeDashoffset = 1; }); }
 
   if (showPre && hasGSAP && !reduced) {
+    doc.classList.remove("curtain-in");
     if (lenis) lenis.stop();
     var plChars = $$(".pl-ch > i", pre), cnt = { v: 0 }, cEl = $(".pl-count", pre);
     gsap.set(plChars, { yPercent: 115 });
