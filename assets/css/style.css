@@ -807,9 +807,9 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.18); }
 .to-top.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .to-top svg { width: 18px; height: 18px; }
 .mbar { display: none; }
-.cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--gold); mix-blend-mode: difference; transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), opacity .3s; opacity: 0; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 1px rgba(var(--plum-900-rgb), .25); transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), background .3s, box-shadow .3s, opacity .3s; opacity: 0; }
 .cursor.is-on { opacity: 1; }
-.cursor.is-hover { width: 54px; height: 54px; margin: -27px 0 0 -27px; }
+.cursor.is-hover { width: 46px; height: 46px; margin: -23px 0 0 -23px; background: rgba(var(--gold-rgb), .12); box-shadow: inset 0 0 0 1.5px var(--gold); }
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
 /* Reveal states (only when JS animation is ready) */
