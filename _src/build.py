@@ -6,6 +6,7 @@ menu, footer) and shared snippets live here, so a phone number or nav change
 is a one-line edit.
 Run:  python3 _src/build.py   -> writes ../<name>.html
 """
+import hashlib
 import json
 import pathlib
 
@@ -115,7 +116,7 @@ HEAD = """<!doctype html>
 <link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=__CSSV__">
 <script>
 (function(d){{var h=d.documentElement;h.classList.add('js');
 var r=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(r){{h.classList.add('reduced');h.classList.remove('anim');}}
@@ -214,7 +215,7 @@ FOOTER = f"""<footer class="footer">
 <script src="assets/vendor/gsap.min.js"></script>
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/vendor/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=__JSV__"></script>
 </body>
 </html>
 """
@@ -278,6 +279,10 @@ def render(body, faq):
     return body
 
 
+def asset_version(rel):
+    return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:10]
+
+
 def build():
     faq = json.loads((PAGES_DIR / "dscr-faq.json").read_text())
     for name, meta in PAGES.items():
@@ -288,6 +293,9 @@ def build():
         body = render(src.read_text(), faq)
         html = (HEAD.format(title=meta["title"], desc=meta["desc"], url=SITE["url"], file="" if name == "index" else file, schema=schema_for(name))
                 + PRELOADER + header(file) + '<main id="main">\n' + body + "\n</main>\n" + FOOTER)
+        # cache-busting: the version changes whenever the file changes, so browsers and CDNs
+        # can never pair a new page with an old stylesheet or script
+        html = html.replace("__CSSV__", asset_version("assets/css/style.css")).replace("__JSV__", asset_version("assets/js/main.js"))
         (ROOT / file).write_text(html)
         print("built", file)
 
