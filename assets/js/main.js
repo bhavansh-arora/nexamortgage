@@ -101,6 +101,12 @@
         onComplete: function () { gsap.set(target, { opacity: 1 }); gsap.to(fly, { opacity: 0, duration: .25, onComplete: function () { fly.remove(); } }); } });
     }
 
+    setTimeout(function () {
+      if (!document.body.contains(pre)) return;
+      if (window.__preTl) window.__preTl.kill();
+      pre.remove(); var fly = $(".pl-fly"); if (fly) fly.remove(); gsap.set(".header .brand__mark", { opacity: 1 });
+      if (lenis) lenis.start(); introBackstop();
+    }, 7000);
     function runPre() {
       window.__preTl = gsap.timeline({ defaults: { ease: "expo.out" }, onComplete: function () { pre.remove(); if (lenis) lenis.start(); window.__preTl = null; } })
         // 1. the monogram: brass rings draw, the disc pops in
@@ -132,7 +138,9 @@
       var chars = splitWord(cWord);
       houseLen(); cHouse.forEach(function (p) { p.style.strokeDashoffset = 0; });
       gsap.set(cFill, { clipPath: "inset(0px 0px 0px 0px round 0px)", opacity: 1 });
-      gsap.timeline({ delay: .08, onComplete: function () { doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel], { clearProps: "all" }); if (lenis) lenis.start(); } })
+      var released = false, release = function () { if (released) return; released = true; doc.classList.remove("curtain-in"); gsap.set([cFill, cLabel], { clearProps: "all" }); if (lenis) lenis.start(); };
+      setTimeout(function () { if (!released) { release(); introBackstop(); } }, 3500);
+      gsap.timeline({ delay: .08, onComplete: release })
         .to(chars, { yPercent: -110, duration: .6, ease: "expo.in", stagger: .02 })
         .to(".curtain__label .mk, .curtain__label small, .curtain__house", { opacity: 0, y: -16, duration: .5, ease: "power2.in" }, "<")
         .to(cFill, { clipPath: panelInset(), duration: 1.05, ease: "expo.inOut" }, "-=.2")
@@ -166,7 +174,9 @@
     gsap.set(chars, { yPercent: 110 });
     gsap.set(".curtain__label .mk", { scale: 0, rotate: -90 });
     gsap.set(".curtain__label small", { opacity: 0, y: 10 });
-    var tl = gsap.timeline({ onComplete: function () { window.location.href = href; } });
+    var gone = false, go = function () { if (gone) return; gone = true; window.location.href = href; };
+    setTimeout(go, 2600); // backstop: some in-app browsers pause animation frames
+    var tl = gsap.timeline({ onComplete: go });
     tl.to(cRing, { scale: 1.02, duration: 1.05, ease: "expo.inOut" }, 0)
       .to(cRing, { opacity: 0, duration: .35 }, .8)
       .to(cFill, { clipPath: "circle(" + R + "px at " + x + "px " + y + "px)", duration: 1.05, ease: "expo.inOut" }, .06)
@@ -242,7 +252,15 @@
       var s = document.createElement("span"); s.className = "ch"; s.textContent = ch; s.setAttribute("aria-hidden", "true"); el.appendChild(s); return s;
     });
   }
+  // makes sure the hero is fully visible even if an animation stalled
+  function forceShowHero() {
+    $$(".hero [data-reveal], .phero [data-reveal], .hero .split .line > span, .phero .split .line > span, .hero__title .ch, .hero__figure img").forEach(function (el) { gsap.set(el, { opacity: 1, x: 0, y: 0, yPercent: 0, scale: 1, rotate: 0 }); });
+    $$(".hero, .phero, .hero [data-inview], .phero [data-inview]").forEach(function (el) { el.classList.add("is-in"); });
+  }
+  function introBackstop() { if (!window.__introStarted) pageIntro(); setTimeout(forceShowHero, 1200); }
   function pageIntro() {
+    if (window.__introStarted) return;
+    window.__introStarted = true;
     if (!hasGSAP || reduced) {
       $$("[data-ring]").forEach(function (r) { setRing(r, true); });
       $$("[data-inview]").forEach(function (el) { el.classList.add("is-in"); });
